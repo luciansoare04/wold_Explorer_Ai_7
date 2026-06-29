@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Explorer AI v7</title>
+  <style>
+    :root{--bg:#eef7f8;--card:#ffffff;--text:#16343a;--muted:#60777d;--main:#0f7f86;--main2:#07545d;--border:#d8ecee;--shadow:0 14px 35px rgba(8,55,62,.12)}
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#e7f6f8,#f8fbfb);color:var(--text)}
+    header{background:linear-gradient(135deg,#073b46,#0f838b);color:white;padding:34px 18px;text-align:center}
+    header h1{margin:0;font-size:34px} header p{margin:8px 0 0;opacity:.92}
+    .wrap{max-width:1050px;margin:0 auto;padding:22px}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-top:-32px}
+    .grid{display:grid;grid-template-columns:1fr 1.6fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    label{font-weight:700;font-size:14px;display:block;margin-bottom:6px} select,input{width:100%;padding:14px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:white}
+    button{border:0;border-radius:12px;padding:14px 16px;font-weight:700;font-size:16px;cursor:pointer;background:var(--main);color:white}button:hover{background:var(--main2)}
+    .full{grid-column:1/-1}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}.card{background:white;border:1px solid var(--border);border-radius:18px;padding:18px;min-height:122px;box-shadow:0 8px 24px rgba(8,55,62,.08)}
+    .card h3{margin:0 0 8px;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.35}.card a{display:inline-block;margin-top:12px;color:var(--main);font-weight:700;text-decoration:none}
+    .result{margin-top:16px;background:#f6fdfe;border:1px solid var(--border);border-radius:16px;padding:16px;display:none}.result h2{margin:0 0 8px}.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.links a{background:#e5f5f6;color:#07545d;border:1px solid #bde2e6;text-decoration:none;border-radius:999px;padding:10px 12px;font-weight:700}
+    footer{text-align:center;color:var(--muted);padding:25px;font-size:13px}.badge{display:inline-block;background:rgba(255,255,255,.18);padding:8px 12px;border-radius:999px;margin-top:12px}
+    @media(max-width:780px){.grid,.grid3,.cards{grid-template-columns:1fr}header h1{font-size:28px}.wrap{padding:14px}.panel{margin-top:-20px}}
+  </style>
+</head>
+<body>
+<header><h1>🌍 World Explorer AI v7</h1><p>Caută orașe, hărți, vreme, hoteluri, joburi și servicii locale.</p><span class="badge">Creat de Lucian Soare</span></header>
+<main class="wrap">
+<section class="panel">
+  <div class="grid">
+    <div><label for="lang">Alege limba</label><select id="lang"><option value="ro">Română</option><option value="en">English</option><option value="es">Español</option><option value="it">Italiano</option><option value="fr">Français</option><option value="de">Deutsch</option></select></div>
+    <div><label for="city">Scrie orașul sau țara</label><input id="city" placeholder="București, London, Paris" /></div>
+    <button class="full" onclick="searchCity()">Caută</button>
+  </div>
+  <div id="result" class="result"><h2 id="title"></h2><p id="desc"></p><div class="links" id="links"></div></div>
+</section>
+<section class="cards">
+  <div class="card"><h3>🗺️ Maps</h3><p>Deschide locația rapid în Google Maps.</p><a href="#" onclick="openLink('maps')">Deschide</a></div>
+  <div class="card"><h3>☀️ Weather</h3><p>Vezi vremea pentru orașul ales.</p><a href="#" onclick="openLink('weather')">Vezi vremea</a></div>
+  <div class="card"><h3>🏨 Hotels</h3><p>Caută hoteluri și cazare.</p><a href="#" onclick="openLink('hotels')">Caută hotel</a></div>
+  <div class="card"><h3>🍽️ Restaurants</h3><p>Caută restaurante în zonă.</p><a href="#" onclick="openLink('restaurants')">Caută restaurant</a></div>
+  <div class="card"><h3>💼 Jobs</h3><p>Caută locuri de muncă în oraș.</p><a href="#" onclick="openLink('jobs')">Caută joburi</a></div>
+  <div class="card"><h3>🚆 Transport</h3><p>Transport local: bus, tren, metrou.</p><a href="#" onclick="openLink('transport')">Transport</a></div>
+  <div class="card"><h3>🚨 Emergency</h3><p>Spitale, poliție și farmacii aproape.</p><a href="#" onclick="openLink('emergency')">Urgențe</a></div>
+  <div class="card"><h3>🤖 AI Assistant</h3><p>Următorul pas: asistent AI în aplicație.</p><a href="#" onclick="alert('AI Assistant va fi adăugat în versiunea următoare.')">Detalii</a></div>
+</section>
+</main><footer>World Explorer AI 7 © Lucian Soare</footer>
+<script>
+const texts={ro:{found:'Rezultate pentru',desc:'Alege o opțiune de mai jos pentru hărți, vreme, hoteluri, restaurante, joburi sau servicii locale.'},en:{found:'Results for',desc:'Choose an option below for maps, weather, hotels, restaurants, jobs or local services.'},es:{found:'Resultados para',desc:'Elige una opción para mapas, clima, hoteles, restaurantes, empleos o servicios locales.'},it:{found:'Risultati per',desc:'Scegli un’opzione per mappe, meteo, hotel, ristoranti, lavori o servizi locali.'},fr:{found:'Résultats pour',desc:'Choisissez une option pour cartes, météo, hôtels, restaurants, emplois ou services locaux.'},de:{found:'Ergebnisse für',desc:'Wähle eine Option für Karten, Wetter, Hotels, Restaurants, Jobs oder lokale Dienste.'}};
+function getCity(){return document.getElementById('city').value.trim()||'London'}
+function searchCity(){const city=getCity(),lang=document.getElementById('lang').value,t=texts[lang]||texts.ro;document.getElementById('result').style.display='block';document.getElementById('title').textContent=t.found+' '+city;document.getElementById('desc').textContent=t.desc;document.getElementById('links').innerHTML=makeLinks(city);}
+function makeLinks(c){const q=encodeURIComponent(c);return `<a target="_blank" href="https://www.google.com/maps/search/${q}">Google Maps</a><a target="_blank" href="https://www.google.com/search?q=weather+${q}">Weather</a><a target="_blank" href="https://www.google.com/search?q=hotels+in+${q}">Hotels</a><a target="_blank" href="https://www.google.com/search?q=restaurants+in+${q}">Restaurants</a><a target="_blank" href="https://www.google.com/search?q=jobs+in+${q}">Jobs</a>`}
+function openLink(type){const c=encodeURIComponent(getCity());const urls={maps:`https://www.google.com/maps/search/${c}`,weather:`https://www.google.com/search?q=weather+${c}`,hotels:`https://www.google.com/search?q=hotels+in+${c}`,restaurants:`https://www.google.com/search?q=restaurants+in+${c}`,jobs:`https://www.google.com/search?q=jobs+in+${c}`,transport:`https://www.google.com/search?q=public+transport+in+${c}`,emergency:`https://www.google.com/search?q=hospital+police+pharmacy+near+${c}`};window.open(urls[type],'_blank')}
+document.getElementById('city').addEventListener('keydown',e=>{if(e.key==='Enter')searchCity()});
+</script>
+</body>
+</html>
