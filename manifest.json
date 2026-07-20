@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f7f86" />
-  <link rel="manifest" href="manifest.json" />
+  text manifest.webmanifest
   <title>World Explorer AI</title>
   <style>
     :root{--bg:#eef7f8;--card:#fff;--text:#17383d;--muted:#657b80;--main:#0f7f86;--main2:#07545d;--line:#d8ecee;--shadow:0 16px 38px rgba(7,66,73,.12)}
