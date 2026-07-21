@@ -1,130 +1,333 @@
 <!doctype html>
 <html lang="ro">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0f7f86" />
-  html <link rel="manifest" href="manifest.webmanifest" /> `
-  <title>World Explorer AI</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#087f8c">
+  <meta name="description" content="World Explorer AI — vreme, hartă, servicii și ghiduri pentru orașe din întreaga lume.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>World Explorer AI v9</title>
   <style>
-    :root{--bg:#eef7f8;--card:#fff;--text:#17383d;--muted:#657b80;--main:#0f7f86;--main2:#07545d;--line:#d8ecee;--shadow:0 16px 38px rgba(7,66,73,.12)}
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#dff5f7 0,#eef7f8 260px);color:var(--text)}
-    header{padding:36px 18px 80px;text-align:center;background:linear-gradient(135deg,#0f7f86,#07545d);color:white}
-    header h1{margin:0;font-size:38px} header p{max-width:760px;margin:12px auto 0;line-height:1.55}.badge{display:inline-block;margin-top:14px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18)}
-    .wrap{max-width:1180px;margin:auto;padding:0 18px 34px}.panel{margin-top:-48px;background:var(--card);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
-    .search-grid{display:grid;grid-template-columns:180px 1fr 150px;gap:12px}.field label{display:block;font-weight:700;margin-bottom:7px}.field input,.field select{width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;font-size:16px;background:white}
-    button,.btn{border:0;border-radius:14px;padding:14px 18px;background:var(--main);color:white;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}button:hover,.btn:hover{background:var(--main2)}
-    .result{display:none;margin-top:20px}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.hero-card,.weather,.map-box,.ai-box{background:#f8fcfc;border:1px solid var(--line);border-radius:20px;padding:18px}.hero img{width:100%;height:320px;object-fit:cover;border-radius:16px;background:#dfeff0}.meta{color:var(--muted);font-size:14px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.secondary{background:white;color:var(--main2);border:1px solid var(--line)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:18px}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 22px rgba(7,66,73,.06)}.card h3{margin:0 0 8px;font-size:20px}.card p{color:var(--muted);line-height:1.5;min-height:46px}.card .btn{width:100%}
-    .section-title{margin:28px 0 12px}.weather-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.weather-item{background:white;border-radius:14px;padding:13px;text-align:center;border:1px solid var(--line)}
-    #map{width:100%;height:360px;border:0;border-radius:16px}.ai-box textarea{width:100%;min-height:100px;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:16px;resize:vertical}.ai-answer{margin-top:12px;white-space:pre-wrap;line-height:1.55}
-    footer{text-align:center;color:var(--muted);padding:30px 15px}.hidden{display:none}.loading{opacity:.7;pointer-events:none}
-    @media(max-width:850px){.search-grid,.hero,.grid{grid-template-columns:1fr}.weather-row{grid-template-columns:repeat(2,1fr)}header h1{font-size:30px}.hero img{height:250px}}
+    :root{
+      --bg:#edf7f8;--card:#fff;--text:#16383d;--muted:#647d82;
+      --main:#087f8c;--main2:#075c66;--line:#d6eaec;--shadow:0 14px 35px rgba(7,72,80,.13);
+      --danger:#b42318;
+    }
+    [data-theme="dark"]{
+      --bg:#0e1c1f;--card:#16282c;--text:#eefbfc;--muted:#a9c2c6;
+      --main:#27b5c3;--main2:#1594a0;--line:#29464b;--shadow:0 14px 35px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.45}
+    button,input,select{font:inherit}
+    header{padding:42px 18px 70px;text-align:center;color:#fff;background:linear-gradient(135deg,#075c66,#0c98a6)}
+    header h1{margin:0;font-size:clamp(30px,6vw,52px)}
+    header p{max-width:760px;margin:10px auto 0;font-size:17px}
+    .badge{display:inline-block;margin-top:14px;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.18)}
+    .wrap{max-width:1160px;margin:-42px auto 0;padding:0 16px 30px}
+    .panel,.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+    .panel{padding:18px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:12px}
+    .search{display:grid;grid-template-columns:180px 1fr auto;gap:10px}
+    input,select{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text)}
+    button,.btn{border:0;border-radius:13px;padding:13px 16px;background:var(--main);color:#fff;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    button:hover,.btn:hover{filter:brightness(.95)}
+    .ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+    .danger{background:var(--danger)}
+    .status{min-height:24px;margin-top:10px;color:var(--muted)}
+    .hero{display:none;margin-top:18px;grid-template-columns:1.25fr .75fr;gap:15px}
+    .hero .card{padding:20px}
+    h2,h3{margin-top:0}
+    .title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .weather-grid,.services,.forecast{display:grid;gap:12px}
+    .weather-grid{grid-template-columns:repeat(4,1fr)}
+    .metric{padding:14px;border:1px solid var(--line);border-radius:16px;text-align:center}
+    .metric strong{display:block;font-size:24px}
+    .forecast{grid-template-columns:repeat(7,1fr);margin-top:13px}
+    .day{padding:12px 8px;border:1px solid var(--line);border-radius:14px;text-align:center}
+    .map{width:100%;height:370px;border:0;border-radius:20px;background:#dcebed}
+    .section-title{margin:28px 0 12px}
+    .services{grid-template-columns:repeat(4,1fr)}
+    .service{padding:18px;min-height:150px}
+    .service .icon{font-size:28px}
+    .service p{color:var(--muted)}
+    .history{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);cursor:pointer}
+    footer{text-align:center;color:var(--muted);padding:25px}
+    .hidden{display:none!important}
+    @media(max-width:850px){
+      .search,.hero{grid-template-columns:1fr}
+      .services{grid-template-columns:repeat(2,1fr)}
+      .weather-grid{grid-template-columns:repeat(2,1fr)}
+      .forecast{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:520px){
+      header{padding-top:30px}
+      .services{grid-template-columns:1fr}
+      .toolbar{justify-content:stretch}
+      .toolbar button{flex:1}
+    }
   </style>
 </head>
 <body>
 <header>
-  <h1>🌍 World Explorer AI</h1>
-  <p id="subtitle">Caută orice oraș din lume și vezi vreme live, hartă, fotografii, hoteluri, restaurante, joburi și servicii utile.</p>
+  <h1>🌍 World Explorer AI v9</h1>
+  <p>Caută orice oraș din lume și vezi vreme live, prognoză, hartă, hoteluri, restaurante, joburi și servicii utile.</p>
   <span class="badge">Creat de Lucian Soare</span>
 </header>
+
 <main class="wrap">
   <section class="panel">
-    <div class="search-grid">
-      <div class="field"><label for="lang">Alege limba</label><select id="lang"><option value="ro">Română</option><option value="en">English</option><option value="es">Español</option><option value="it">Italiano</option><option value="fr">Français</option><option value="de">Deutsch</option></select></div>
-      <div class="field"><label for="city">Scrie orașul sau țara</label><input id="city" placeholder="Exemplu: Londra, București, Paris" value="Londra" /></div>
-      <div class="field"><label>&nbsp;</label><button id="searchBtn">🔎 Caută</button></div>
+    <div class="toolbar">
+      <button id="locateBtn" class="ghost">📍 Locația mea</button>
+      <button id="themeBtn" class="ghost">🌙 Mod întunecat</button>
+      <button id="installBtn" class="ghost hidden">📲 Instalează</button>
     </div>
 
-    <section id="result" class="result">
-      <div class="hero">
-        <div class="hero-card">
-          <h2 id="placeTitle">Londra</h2>
-          <div id="coords" class="meta"></div>
-          <p id="description">Se încarcă informațiile despre oraș...</p>
-          <div class="actions">
-            <button id="favBtn" class="secondary">♡ Salvează favorit</button>
-            <a id="mapsBtn" class="btn" target="_blank">🗺️ Google Maps</a>
-            <a id="wikiBtn" class="btn secondary" target="_blank">ℹ️ Mai multe informații</a>
-            <button id="shareBtn" class="secondary">📤 Distribuie</button>
+    <div class="search">
+      <select id="lang" aria-label="Alege limba">
+        <option value="ro">Română</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="it">Italiano</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+      </select>
+      <input id="city" placeholder="Scrie orașul sau țara" value="Londra" autocomplete="off">
+      <button id="searchBtn">🔎 Caută</button>
+    </div>
+    <div id="status" class="status">Introdu un oraș și apasă „Caută”.</div>
+
+    <section id="result" class="hero">
+      <article class="card">
+        <div class="title-row">
+          <div>
+            <h2 id="placeTitle">Oraș</h2>
+            <div id="coords" style="color:var(--muted)"></div>
           </div>
+          <button id="favBtn" class="ghost">♡ Favorit</button>
         </div>
-        <div class="hero-card"><img id="cityImage" alt="Fotografie oraș" /></div>
-      </div>
-
-      <h2 class="section-title">☀️ Vreme live</h2>
-      <div class="weather">
-        <div class="weather-row">
-          <div class="weather-item"><strong id="temp">--°C</strong><br><span>Temperatură</span></div>
-          <div class="weather-item"><strong id="humidity">--%</strong><br><span>Umiditate</span></div>
-          <div class="weather-item"><strong id="wind">-- km/h</strong><br><span>Vânt</span></div>
-          <div class="weather-item"><strong id="weatherText">--</strong><br><span>Condiții</span></div>
+        <p id="description">Se încarcă informațiile...</p>
+        <div class="actions">
+          <a id="mapsLink" class="btn" target="_blank" rel="noopener">🗺️ Google Maps</a>
+          <a id="wikiLink" class="btn ghost" target="_blank" rel="noopener">ℹ️ Wikipedia</a>
+          <button id="shareBtn" class="ghost">📤 Distribuie</button>
         </div>
-      </div>
+      </article>
 
-      <h2 class="section-title">🗺️ Hartă interactivă</h2>
-      <div class="map-box"><iframe id="map" loading="lazy"></iframe></div>
-
-      <h2 class="section-title">Servicii și călătorii</h2>
-      <div id="cards" class="grid"></div>
-
-      <h2 class="section-title">🤖 Ghid de călătorie</h2>
-      <div class="ai-box">
-        <textarea id="aiQuestion" placeholder="Întreabă despre oraș: ce pot vizita, unde mănânc, cum ajung la aeroport..."></textarea>
-        <button id="aiBtn" style="margin-top:10px">✨ Creează ghid</button>
-        <div id="aiAnswer" class="ai-answer"></div>
-      </div>
+      <article class="card">
+        <h3>☀️ Vreme live</h3>
+        <div class="weather-grid">
+          <div class="metric"><strong id="temp">--°C</strong><span>Temperatură</span></div>
+          <div class="metric"><strong id="humidity">--%</strong><span>Umiditate</span></div>
+          <div class="metric"><strong id="wind">-- km/h</strong><span>Vânt</span></div>
+          <div class="metric"><strong id="condition">--</strong><span>Condiții</span></div>
+        </div>
+      </article>
     </section>
+
+    <section id="forecastSection" class="hidden">
+      <h2 class="section-title">📅 Prognoză 7 zile</h2>
+      <div id="forecast" class="forecast"></div>
+    </section>
+
+    <section id="mapSection" class="hidden">
+      <h2 class="section-title">🗺️ Hartă</h2>
+      <iframe id="map" class="map" loading="lazy" title="Hartă"></iframe>
+    </section>
+
+    <h2 class="section-title">🧭 Servicii și călătorii</h2>
+    <section class="services">
+      <article class="card service"><div class="icon">🏨</div><h3>Hoteluri</h3><p>Caută cazare în orașul ales.</p><button data-service="hotels">Deschide</button></article>
+      <article class="card service"><div class="icon">🍽️</div><h3>Restaurante</h3><p>Găsește restaurante în apropiere.</p><button data-service="restaurants">Deschide</button></article>
+      <article class="card service"><div class="icon">💼</div><h3>Joburi</h3><p>Caută locuri de muncă locale.</p><button data-service="jobs">Deschide</button></article>
+      <article class="card service"><div class="icon">🚆</div><h3>Transport</h3><p>Metrou, tren și autobuz.</p><button data-service="transport">Deschide</button></article>
+      <article class="card service"><div class="icon">🏥</div><h3>Spitale</h3><p>Servicii medicale din apropiere.</p><button data-service="hospital">Deschide</button></article>
+      <article class="card service"><div class="icon">💊</div><h3>Farmacii</h3><p>Farmacii în zona căutată.</p><button data-service="pharmacy">Deschide</button></article>
+      <article class="card service"><div class="icon">👮</div><h3>Poliție</h3><p>Posturi de poliție locale.</p><button data-service="police">Deschide</button></article>
+      <article class="card service"><div class="icon">🤖</div><h3>Asistent AI</h3><p>Întreabă ChatGPT despre oraș.</p><button id="aiBtn">Întreabă AI</button></article>
+    </section>
+
+    <h2 class="section-title">⭐ Favorite</h2>
+    <div id="favorites" class="history"></div>
+
+    <h2 class="section-title">🕘 Istoric</h2>
+    <div id="history" class="history"></div>
   </section>
 </main>
-<footer>🌍 World Explorer AI<br>© 2026 Lucian Soare<br>Explore the World with AI</footer>
+
+<footer>World Explorer AI v9 © 2026 Lucian Soare</footer>
+
 <script>
-const $=id=>document.getElementById(id);
-let current={name:'Londra',lat:51.5085,lon:-0.1257,country:'Regatul Unit'};
-const cards=[
-['🏨','Hoteluri','Caută hoteluri și cazare în orașul ales.','hoteluri','https://www.google.com/travel/hotels?q='],
-['🍽️','Restaurante','Descoperă restaurante și mâncare locală.','restaurante','https://www.google.com/maps/search/restaurants+in+'],
-['💼','Joburi','Caută locuri de muncă în zona aleasă.','joburi','https://www.indeed.com/jobs?q=&l='],
-['🚆','Transport','Metrou, tren, autobuz și transport public.','transport','https://www.google.com/maps/search/public+transport+in+'],
-['🚨','Urgențe','Spitale, poliție și farmacii din apropiere.','urgențe','https://www.google.com/maps/search/emergency+services+in+'],
-['📸','Fotografii','Vezi mai multe imagini cu orașul căutat.','fotografii','https://www.google.com/search?tbm=isch&q='],
-['🎯','Atracții','Obiective turistice și locuri importante.','atracții','https://www.google.com/maps/search/tourist+attractions+in+'],
-['✈️','Zboruri','Caută zboruri către destinația aleasă.','zboruri','https://www.google.com/travel/flights?q=flights+to+'],
-['🚕','Taxi','Găsește servicii de taxi și transport local.','taxi','https://www.google.com/maps/search/taxi+in+'],
-['💊','Farmacii','Găsește farmacii din apropiere.','farmacii','https://www.google.com/maps/search/pharmacy+in+'],
-['🏛️','Muzee','Descoperă muzee și locuri culturale.','muzee','https://www.google.com/maps/search/museums+in+'],
-['🛍️','Shopping','Centre comerciale și magazine.','shopping','https://www.google.com/maps/search/shopping+in+']
-];
-function renderCards(){ $('cards').innerHTML=cards.map(c=>`<article class="card"><h3>${c[0]} ${c[1]}</h3><p>${c[2]}</p><a class="btn" target="_blank" href="${c[4]}${encodeURIComponent(current.name)}">Vezi ${c[3]}</a></article>`).join(''); }
-function weatherLabel(code){if(code===0)return'Senin';if(code<=3)return'Parțial noros';if(code<=48)return'Ceață';if(code<=67)return'Ploaie';if(code<=77)return'Ninsoare';if(code<=82)return'Averse';if(code<=99)return'Furtună';return'Necunoscut'}
-async function searchCity(){
- const q=$('city').value.trim(); if(!q)return;
- $('searchBtn').classList.add('loading'); $('searchBtn').textContent='Se caută...';
- try{
-  const geo=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=1&language=ro&format=json`).then(r=>r.json());
-  if(!geo.results?.length)throw new Error('Orașul nu a fost găsit.');
-  const g=geo.results[0]; current={name:g.name,lat:g.latitude,lon:g.longitude,country:g.country||''};
-  $('placeTitle').textContent=`${g.name}${g.admin1?', '+g.admin1:''}${g.country?', '+g.country:''}`;
-  $('coords').textContent=`Lat: ${g.latitude.toFixed(4)} | Lon: ${g.longitude.toFixed(4)}`;
-  $('mapsBtn').href=`https://www.google.com/maps?q=${g.latitude},${g.longitude}`;
-  $('map').src=`https://www.openstreetmap.org/export/embed.html?bbox=${g.longitude-0.08}%2C${g.latitude-0.05}%2C${g.longitude+0.08}%2C${g.latitude+0.05}&layer=mapnik&marker=${g.latitude}%2C${g.longitude}`;
-  const wikiTitle=encodeURIComponent(g.name);
-  $('wikiBtn').href=`https://ro.wikipedia.org/wiki/${wikiTitle}`;
-  let desc=`${g.name} este o destinație din ${g.country||'lume'}. Folosește opțiunile de mai jos pentru vreme, hartă, hoteluri, restaurante, transport și atracții.`;
-  try{const w=await fetch(`https://ro.wikipedia.org/api/rest_v1/page/summary/${wikiTitle}`).then(r=>r.json()); if(w.extract)desc=w.extract; if(w.thumbnail?.source)$('cityImage').src=w.thumbnail.source.replace(/\/\d+px-/,'/1200px-'); else $('cityImage').src=`https://source.unsplash.com/1200x800/?${encodeURIComponent(g.name)},city`; }catch(e){$('cityImage').src=`https://source.unsplash.com/1200x800/?${encodeURIComponent(g.name)},city`;}
-  $('description').textContent=desc;
-  const wx=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${g.latitude}&longitude=${g.longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`).then(r=>r.json());
-  $('temp').textContent=`${Math.round(wx.current.temperature_2m)}°C`; $('humidity').textContent=`${wx.current.relative_humidity_2m}%`; $('wind').textContent=`${wx.current.wind_speed_10m} km/h`; $('weatherText').textContent=weatherLabel(wx.current.weather_code);
-  renderCards(); $('result').style.display='block'; localStorage.setItem('lastCity',q);
- }catch(e){alert(e.message||'A apărut o eroare.');}
- finally{$('searchBtn').classList.remove('loading');$('searchBtn').textContent='🔎 Caută';}
+const $ = id => document.getElementById(id);
+let currentPlace = null;
+let deferredPrompt = null;
+
+const weatherText = code => ({
+  0:"Senin",1:"Mai mult senin",2:"Parțial noros",3:"Înnorat",
+  45:"Ceață",48:"Ceață",51:"Burniță",53:"Burniță",55:"Burniță",
+  61:"Ploaie",63:"Ploaie",65:"Ploaie puternică",71:"Ninsoare",
+  73:"Ninsoare",75:"Ninsoare puternică",80:"Averse",81:"Averse",
+  82:"Averse puternice",95:"Furtună",96:"Furtună",99:"Furtună"
+}[code] || "Variabil");
+
+function storeList(key, value){
+  const list = JSON.parse(localStorage.getItem(key) || "[]");
+  const next = [value, ...list.filter(x => x.name !== value.name)].slice(0, 10);
+  localStorage.setItem(key, JSON.stringify(next));
+  renderLists();
 }
-$('searchBtn').onclick=searchCity; $('city').addEventListener('keydown',e=>{if(e.key==='Enter')searchCity()});
-$('favBtn').onclick=()=>{const list=JSON.parse(localStorage.getItem('favorites')||'[]');if(!list.includes(current.name))list.push(current.name);localStorage.setItem('favorites',JSON.stringify(list));$('favBtn').textContent='♥ Salvat la favorite'};
-$('shareBtn').onclick=async()=>{const data={title:'World Explorer AI',text:`Descoperă ${current.name} cu World Explorer AI`,url:location.href};if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);alert('Link copiat.')}};
-$('aiBtn').onclick=()=>{const q=$('aiQuestion').value.trim()||`Ce pot vizita în ${current.name}?`; $('aiAnswer').textContent=`Ghid rapid pentru ${current.name}:\n\n• Verifică atracțiile principale și programul lor.\n• Folosește harta pentru transport și trasee.\n• Rezervă cazarea din timp.\n• Păstrează numerele locale de urgență.\n• Pentru întrebarea ta: „${q}”, folosește butoanele de mai sus pentru rezultate actualizate.\n\nNotă: pentru răspunsuri AI complete este necesară conectarea unei chei API.`};
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-window.addEventListener('load',()=>{const last=localStorage.getItem('lastCity');if(last)$('city').value=last;searchCity();});
+function renderLists(){
+  for(const [key, el] of [["favorites", $("favorites")], ["history", $("history")]]){
+    const list = JSON.parse(localStorage.getItem(key) || "[]");
+    el.innerHTML = list.length ? list.map(x =>
+      `<button class="chip" data-name="${encodeURIComponent(x.name)}">${x.name}</button>`
+    ).join("") : `<span style="color:var(--muted)">Nimic salvat încă.</span>`;
+  }
+  document.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+    $("city").value = decodeURIComponent(b.dataset.name);
+    searchCity();
+  });
+}
+
+async function getDescription(name, lang){
+  try{
+    const title = encodeURIComponent(name.split(",")[0]);
+    const r = await fetch(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${title}`);
+    if(!r.ok) throw new Error();
+    const d = await r.json();
+    return {text:d.extract || "Nu există descriere disponibilă.", url:d.content_urls?.desktop?.page};
+  }catch{
+    return {text:"Informațiile principale sunt disponibile prin hartă, vreme și serviciile de mai jos.", url:`https://${lang}.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(name)}`};
+  }
+}
+
+async function loadPlace(place){
+  const lat = place.latitude, lon = place.longitude;
+  const lang = $("lang").value;
+  currentPlace = {name:place.name, lat, lon, country:place.country || ""};
+
+  $("placeTitle").textContent = [place.name, place.admin1, place.country].filter(Boolean).join(", ");
+  $("coords").textContent = `Lat: ${Number(lat).toFixed(4)} | Lon: ${Number(lon).toFixed(4)}`;
+  $("mapsLink").href = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+
+  const [wiki, weather] = await Promise.all([
+    getDescription(place.name, lang),
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`).then(r=>r.json())
+  ]);
+
+  $("description").textContent = wiki.text;
+  $("wikiLink").href = wiki.url;
+  const c = weather.current || {};
+  $("temp").textContent = `${Math.round(c.temperature_2m ?? 0)}°C`;
+  $("humidity").textContent = `${c.relative_humidity_2m ?? "--"}%`;
+  $("wind").textContent = `${Math.round(c.wind_speed_10m ?? 0)} km/h`;
+  $("condition").textContent = weatherText(c.weather_code);
+
+  const daily = weather.daily || {};
+  $("forecast").innerHTML = (daily.time || []).slice(0,7).map((date,i) => {
+    const day = new Date(date+"T12:00:00").toLocaleDateString(lang,{weekday:"short"});
+    return `<div class="day"><strong>${day}</strong><div>${weatherText(daily.weather_code[i])}</div><div>${Math.round(daily.temperature_2m_max[i])}° / ${Math.round(daily.temperature_2m_min[i])}°</div></div>`;
+  }).join("");
+
+  const delta = 0.08;
+  $("map").src = `https://www.openstreetmap.org/export/embed.html?bbox=${lon-delta}%2C${lat-delta}%2C${lon+delta}%2C${lat+delta}&layer=mapnik&marker=${lat}%2C${lon}`;
+
+  $("result").style.display = "grid";
+  $("forecastSection").classList.remove("hidden");
+  $("mapSection").classList.remove("hidden");
+  $("status").textContent = "Informațiile au fost încărcate.";
+  storeList("history", currentPlace);
+}
+
+async function searchCity(){
+  const q = $("city").value.trim();
+  if(!q) return $("status").textContent = "Scrie un oraș.";
+  $("status").textContent = "Se caută...";
+  $("searchBtn").disabled = true;
+  try{
+    const lang = $("lang").value;
+    const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=1&language=${lang}&format=json`);
+    const d = await r.json();
+    if(!d.results?.length) throw new Error("Orașul nu a fost găsit.");
+    await loadPlace(d.results[0]);
+  }catch(e){
+    $("status").textContent = e.message || "Nu s-au putut încărca datele. Verifică internetul.";
+  }finally{
+    $("searchBtn").disabled = false;
+  }
+}
+
+$("searchBtn").onclick = searchCity;
+$("city").addEventListener("keydown", e => { if(e.key === "Enter") searchCity(); });
+
+$("favBtn").onclick = () => {
+  if(!currentPlace) return;
+  storeList("favorites", currentPlace);
+  $("favBtn").textContent = "♥ Salvat";
+};
+
+$("shareBtn").onclick = async () => {
+  if(!currentPlace) return;
+  const data = {title:"World Explorer AI", text:`Vezi ${currentPlace.name} în World Explorer AI`, url:location.href};
+  try{ if(navigator.share) await navigator.share(data); else await navigator.clipboard.writeText(location.href); }
+  catch{}
+};
+
+document.querySelectorAll("[data-service]").forEach(btn => btn.onclick = () => {
+  const city = currentPlace?.name || $("city").value || "London";
+  const terms = {
+    hotels:"hotels in", restaurants:"restaurants in", jobs:"jobs in", transport:"public transport in",
+    hospital:"hospitals in", pharmacy:"pharmacies in", police:"police stations in"
+  };
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(terms[btn.dataset.service]+" "+city)}`,"_blank","noopener");
+});
+
+$("aiBtn").onclick = () => {
+  const city = currentPlace?.name || $("city").value || "Londra";
+  const prompt = `Spune-mi ce merită vizitat în ${city}, unde pot mânca, cum este transportul și ce trebuie să știu înainte de călătorie.`;
+  window.open(`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`,"_blank","noopener");
+};
+
+$("locateBtn").onclick = () => {
+  if(!navigator.geolocation) return $("status").textContent = "Localizarea nu este disponibilă.";
+  $("status").textContent = "Se caută locația ta...";
+  navigator.geolocation.getCurrentPosition(async p => {
+    const lat=p.coords.latitude, lon=p.coords.longitude;
+    try{
+      const r=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(lat+","+lon)}&count=1`);
+      // fallback direct place
+      await loadPlace({name:"Locația mea",latitude:lat,longitude:lon,country:""});
+    }catch{
+      await loadPlace({name:"Locația mea",latitude:lat,longitude:lon,country:""});
+    }
+  }, () => $("status").textContent = "Nu ai permis accesul la locație.");
+};
+
+$("themeBtn").onclick = () => {
+  const dark = document.documentElement.dataset.theme === "dark";
+  document.documentElement.dataset.theme = dark ? "" : "dark";
+  localStorage.setItem("theme", dark ? "light" : "dark");
+  $("themeBtn").textContent = dark ? "🌙 Mod întunecat" : "☀️ Mod luminos";
+};
+if(localStorage.getItem("theme")==="dark"){
+  document.documentElement.dataset.theme="dark";
+  $("themeBtn").textContent="☀️ Mod luminos";
+}
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault(); deferredPrompt=e; $("installBtn").classList.remove("hidden");
+});
+$("installBtn").onclick = async () => {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt(); await deferredPrompt.userChoice;
+  deferredPrompt=null; $("installBtn").classList.add("hidden");
+};
+
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
+renderLists();
+searchCity();
 </script>
 </body>
 </html>
