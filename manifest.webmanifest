@@ -1,1 +1,24 @@
-
+{
+  "name": "World Explorer AI v9",
+  "short_name": "World Explorer",
+  "description": "Vreme, hartă și servicii utile pentru orașe din întreaga lume.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#edf7f8",
+  "theme_color": "#087f8c",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%23087f8c'/><text x='96' y='128' text-anchor='middle' font-size='110'>🌍</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%23087f8c'/><text x='256' y='350' text-anchor='middle' font-size='300'>🌍</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
