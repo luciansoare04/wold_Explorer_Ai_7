@@ -1,340 +1,335 @@
 <!doctype html>
 <html lang="ro">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#087f8c">
-  <meta name="description" content="World Explorer AI — vreme, hartă, servicii și ghiduri pentru orașe din întreaga lume.">
-  <link rel="manifest" href="manifest.webmanifest">
-  <title>World Explorer AI v9</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f7f86" />
+  <meta name="description" content="World Explorer AI — vreme, hartă, fotografii, hoteluri, restaurante, joburi și servicii utile pentru orice oraș." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>World Explorer AI</title>
   <style>
     :root{
-      --bg:#edf7f8;--card:#fff;--text:#16383d;--muted:#647d82;
-      --main:#087f8c;--main2:#075c66;--line:#d6eaec;--shadow:0 14px 35px rgba(7,72,80,.13);
-      --danger:#b42318;
+      --bg:#eef7f8;--card:#fff;--text:#16343a;--muted:#60777d;
+      --main:#0f7f86;--main2:#07545d;--border:#d8ecee;--shadow:0 14px 35px rgba(8,55,62,.12);
+      --danger:#b42318;--ok:#067647;
     }
     [data-theme="dark"]{
-      --bg:#0e1c1f;--card:#16282c;--text:#eefbfc;--muted:#a9c2c6;
-      --main:#27b5c3;--main2:#1594a0;--line:#29464b;--shadow:0 14px 35px rgba(0,0,0,.35);
+      --bg:#0b171a;--card:#102529;--text:#e6f4f5;--muted:#a5bdc1;
+      --main:#27a9b2;--main2:#7bd5da;--border:#254247;--shadow:0 16px 38px rgba(0,0,0,.35);
+      --danger:#ff8a80;--ok:#6ce9a6;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.45}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
     button,input,select{font:inherit}
-    header{padding:42px 18px 70px;text-align:center;color:#fff;background:linear-gradient(135deg,#075c66,#0c98a6)}
-    header h1{margin:0;font-size:clamp(30px,6vw,52px)}
-    header p{max-width:760px;margin:10px auto 0;font-size:17px}
-    .badge{display:inline-block;margin-top:14px;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.18)}
-    .wrap{max-width:1160px;margin:-42px auto 0;padding:0 16px 30px}
-    .panel,.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
-    .panel{padding:18px}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:12px}
-    .search{display:grid;grid-template-columns:180px 1fr auto;gap:10px}
-    input,select{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text)}
-    button,.btn{border:0;border-radius:13px;padding:13px 16px;background:var(--main);color:#fff;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}
-    button:hover,.btn:hover{filter:brightness(.95)}
-    .ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-    .danger{background:var(--danger)}
-    .status{min-height:24px;margin-top:10px;color:var(--muted)}
-    .hero{display:none;margin-top:18px;grid-template-columns:1.25fr .75fr;gap:15px}
-    .hero .card{padding:20px}
-    h2,h3{margin-top:0}
-    .title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-    .weather-grid,.services,.forecast{display:grid;gap:12px}
-    .weather-grid{grid-template-columns:repeat(4,1fr)}
-    .metric{padding:14px;border:1px solid var(--line);border-radius:16px;text-align:center}
-    .metric strong{display:block;font-size:24px}
-    .forecast{grid-template-columns:repeat(7,1fr);margin-top:13px}
-    .day{padding:12px 8px;border:1px solid var(--line);border-radius:14px;text-align:center}
-    .map{width:100%;height:370px;border:0;border-radius:20px;background:#dcebed}
-    .section-title{margin:28px 0 12px}
-    .services{grid-template-columns:repeat(4,1fr)}
-    .service{padding:18px;min-height:150px}
-    .service .icon{font-size:28px}
-    .service p{color:var(--muted)}
-    .history{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);cursor:pointer}
-    footer{text-align:center;color:var(--muted);padding:25px}
+    a{color:inherit}
+    header{background:linear-gradient(135deg,var(--main2),var(--main));color:#fff;padding:34px 18px 56px;text-align:center}
+    header h1{margin:0;font-size:clamp(30px,5vw,48px)}
+    header p{max-width:760px;margin:10px auto 0;opacity:.95}
+    .badge{display:inline-block;background:rgba(255,255,255,.18);padding:8px 12px;border-radius:999px;margin-top:14px}
+    .top-actions{position:absolute;right:16px;top:14px;display:flex;gap:8px}
+    .icon-btn{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.15);color:#fff;padding:9px 12px;border-radius:12px;cursor:pointer}
+    .wrap{max-width:1180px;margin:auto;padding:0 16px 38px}
+    .panel{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:22px;padding:18px;margin-top:-30px}
+    .search-grid{display:grid;grid-template-columns:180px 1fr auto;gap:12px;align-items:end}
+    label{display:block;font-weight:700;margin-bottom:7px}
+    select,input{width:100%;border:1px solid var(--border);background:var(--card);color:var(--text);padding:13px 14px;border-radius:13px;outline:none}
+    input:focus,select:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(15,127,134,.15)}
+    .btn{border:0;background:var(--main);color:#fff;padding:13px 18px;border-radius:13px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .btn.secondary{background:transparent;color:var(--main);border:1px solid var(--main)}
+    .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .status{min-height:24px;margin-top:12px;color:var(--muted)}
+    .status.error{color:var(--danger)}
+    .hero{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;margin-top:18px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+    .city-title{margin:0 0 6px;font-size:28px}
+    .coords{color:var(--muted);font-size:14px}
+    .desc{line-height:1.65}
+    .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+    .photo{width:100%;height:260px;object-fit:cover;border-radius:14px;background:var(--bg)}
+    .weather-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .metric{background:var(--bg);border-radius:14px;padding:14px;text-align:center}
+    .metric strong{font-size:22px;display:block}
+    .metric span{font-size:13px;color:var(--muted)}
+    .map{width:100%;height:370px;border:0;border-radius:15px;background:var(--bg)}
+    h2.section{margin:28px 0 12px}
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .service h3{margin:0 0 8px}
+    .service p{margin:0 0 14px;color:var(--muted);min-height:44px}
+    .forecast{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;overflow:auto}
+    .day{min-width:112px;background:var(--bg);border-radius:14px;padding:12px;text-align:center}
+    .day strong{display:block}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{border:1px solid var(--border);background:var(--bg);color:var(--text);padding:8px 11px;border-radius:999px;cursor:pointer}
+    .guide-box{white-space:pre-wrap;line-height:1.55;background:var(--bg);padding:14px;border-radius:14px;margin-top:12px}
+    footer{text-align:center;color:var(--muted);padding:28px 12px}
     .hidden{display:none!important}
     @media(max-width:850px){
-      .search,.hero{grid-template-columns:1fr}
-      .services{grid-template-columns:repeat(2,1fr)}
+      .search-grid,.hero,.services{grid-template-columns:1fr}
       .weather-grid{grid-template-columns:repeat(2,1fr)}
-      .forecast{grid-template-columns:repeat(2,1fr)}
-    }
-    @media(max-width:520px){
-      header{padding-top:30px}
-      .services{grid-template-columns:1fr}
-      .toolbar{justify-content:stretch}
-      .toolbar button{flex:1}
+      .top-actions{position:static;justify-content:center;margin-bottom:14px}
     }
   </style>
 </head>
 <body>
 <header>
-  <h1>🌍 World Explorer AI v9</h1>
-  <p>Caută orice oraș din lume și vezi vreme live, prognoză, hartă, hoteluri, restaurante, joburi și servicii utile.</p>
+  <div class="top-actions">
+    <button id="installBtn" class="icon-btn hidden">📲 Instalează</button>
+    <button id="themeBtn" class="icon-btn" aria-label="Schimbă tema">🌙</button>
+  </div>
+  <h1>🌍 World Explorer AI</h1>
+  <p>Caută orice oraș din lume și vezi vreme live, hartă, fotografii, hoteluri, restaurante, joburi și servicii utile.</p>
   <span class="badge">Creat de Lucian Soare</span>
 </header>
 
 <main class="wrap">
   <section class="panel">
-    <div class="toolbar">
-      <button id="locateBtn" class="ghost">📍 Locația mea</button>
-      <button id="themeBtn" class="ghost">🌙 Mod întunecat</button>
-      <button id="installBtn" class="ghost hidden">📲 Instalează</button>
+    <div class="search-grid">
+      <div>
+        <label for="lang">Alege limba</label>
+        <select id="lang">
+          <option value="ro">Română</option><option value="en">English</option>
+          <option value="es">Español</option><option value="it">Italiano</option>
+          <option value="fr">Français</option><option value="de">Deutsch</option>
+        </select>
+      </div>
+      <div>
+        <label for="query">Scrie orașul sau țara</label>
+        <input id="query" value="Londra" placeholder="București, London, Paris" />
+      </div>
+      <button id="searchBtn" class="btn">🔎 Caută</button>
     </div>
+    <div id="history" class="chips" style="margin-top:12px"></div>
+    <div id="status" class="status">Apasă „Caută” pentru rezultate.</div>
+  </section>
 
-    <div class="search">
-      <select id="lang" aria-label="Alege limba">
-        <option value="ro">Română</option>
-        <option value="en">English</option>
-        <option value="es">Español</option>
-        <option value="it">Italiano</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-      </select>
-      <input id="city" placeholder="Scrie orașul sau țara" value="Londra" autocomplete="off">
-      <button id="searchBtn">🔎 Caută</button>
-    </div>
-    <div id="status" class="status">Introdu un oraș și apasă „Caută”.</div>
-
-    <section id="result" class="hero">
+  <section id="results" class="hidden">
+    <div class="hero">
       <article class="card">
-        <div class="title-row">
-          <div>
-            <h2 id="placeTitle">Oraș</h2>
-            <div id="coords" style="color:var(--muted)"></div>
-          </div>
-          <button id="favBtn" class="ghost">♡ Favorit</button>
-        </div>
-        <p id="description">Se încarcă informațiile...</p>
+        <h2 id="cityTitle" class="city-title"></h2>
+        <div id="coords" class="coords"></div>
+        <p id="description" class="desc"></p>
         <div class="actions">
-          <a id="mapsLink" class="btn" target="_blank" rel="noopener">🗺️ Google Maps</a>
-          <a id="wikiLink" class="btn ghost" target="_blank" rel="noopener">ℹ️ Wikipedia</a>
-          <button id="shareBtn" class="ghost">📤 Distribuie</button>
+          <button id="favBtn" class="btn secondary">♡ Salvează favorit</button>
+          <a id="mapsBtn" class="btn ghost" target="_blank" rel="noopener">🗺️ Google Maps</a>
+          <a id="infoBtn" class="btn ghost" target="_blank" rel="noopener">ℹ️ Mai multe informații</a>
+          <button id="shareBtn" class="btn ghost">📤 Distribuie</button>
         </div>
       </article>
-
       <article class="card">
-        <h3>☀️ Vreme live</h3>
-        <div class="weather-grid">
-          <div class="metric"><strong id="temp">--°C</strong><span>Temperatură</span></div>
-          <div class="metric"><strong id="humidity">--%</strong><span>Umiditate</span></div>
-          <div class="metric"><strong id="wind">-- km/h</strong><span>Vânt</span></div>
-          <div class="metric"><strong id="condition">--</strong><span>Condiții</span></div>
-        </div>
+        <img id="cityPhoto" class="photo" alt="Fotografie oraș" />
       </article>
-    </section>
+    </div>
 
-    <section id="forecastSection" class="hidden">
-      <h2 class="section-title">📅 Prognoză 7 zile</h2>
+    <h2 class="section">☀️ Vreme live</h2>
+    <section class="card">
+      <div class="weather-grid">
+        <div class="metric"><strong id="temp">—</strong><span>Temperatură</span></div>
+        <div class="metric"><strong id="humidity">—</strong><span>Umiditate</span></div>
+        <div class="metric"><strong id="wind">—</strong><span>Vânt</span></div>
+        <div class="metric"><strong id="condition">—</strong><span>Condiții</span></div>
+      </div>
+      <h3>Prognoză 7 zile</h3>
       <div id="forecast" class="forecast"></div>
     </section>
 
-    <section id="mapSection" class="hidden">
-      <h2 class="section-title">🗺️ Hartă</h2>
-      <iframe id="map" class="map" loading="lazy" title="Hartă"></iframe>
+    <h2 class="section">🗺️ Hartă interactivă</h2>
+    <section class="card"><iframe id="mapFrame" class="map" loading="lazy"></iframe></section>
+
+    <h2 class="section">Servicii și călătorii</h2>
+    <section id="services" class="services"></section>
+
+    <h2 class="section">🤖 Ghid de călătorie</h2>
+    <section class="card">
+      <p>Primești instant un ghid simplu pentru orașul ales.</p>
+      <button id="guideBtn" class="btn">✨ Creează ghid</button>
+      <div id="guideBox" class="guide-box hidden"></div>
     </section>
-
-    <h2 class="section-title">🧭 Servicii și călătorii</h2>
-    <section class="services">
-      <article class="card service"><div class="icon">🏨</div><h3>Hoteluri</h3><p>Caută cazare în orașul ales.</p><button data-service="hotels">Deschide</button></article>
-      <article class="card service"><div class="icon">🍽️</div><h3>Restaurante</h3><p>Găsește restaurante în apropiere.</p><button data-service="restaurants">Deschide</button></article>
-      <article class="card service"><div class="icon">💼</div><h3>Joburi</h3><p>Caută locuri de muncă locale.</p><button data-service="jobs">Deschide</button></article>
-      <article class="card service"><div class="icon">🚆</div><h3>Transport</h3><p>Metrou, tren și autobuz.</p><button data-service="transport">Deschide</button></article>
-      <article class="card service"><div class="icon">🏥</div><h3>Spitale</h3><p>Servicii medicale din apropiere.</p><button data-service="hospital">Deschide</button></article>
-      <article class="card service"><div class="icon">💊</div><h3>Farmacii</h3><p>Farmacii în zona căutată.</p><button data-service="pharmacy">Deschide</button></article>
-      <article class="card service"><div class="icon">👮</div><h3>Poliție</h3><p>Posturi de poliție locale.</p><button data-service="police">Deschide</button></article>
-      <article class="card service"><div class="icon">🤖</div><h3>Asistent AI</h3><p>Întreabă ChatGPT despre oraș.</p><button id="aiBtn">Întreabă AI</button></article>
-    </section>
-
-    <h2 class="section-title">⭐ Favorite</h2>
-    <div id="favorites" class="history"></div>
-
-    <h2 class="section-title">🕘 Istoric</h2>
-    <div id="history" class="history"></div>
   </section>
 </main>
 
-<footer>World Explorer AI v9 © 2026 Lucian Soare</footer>
+<footer>World Explorer AI © Lucian Soare</footer>
 
 <script>
-const $ = id => document.getElementById(id);
-let currentPlace = null;
-let deferredPrompt = null;
+const $ = s => document.querySelector(s);
+const state = { city:null, deferredPrompt:null };
 
-const weatherText = code => ({
-  0:"Senin",1:"Mai mult senin",2:"Parțial noros",3:"Înnorat",
-  45:"Ceață",48:"Ceață",51:"Burniță",53:"Burniță",55:"Burniță",
-  61:"Ploaie",63:"Ploaie",65:"Ploaie puternică",71:"Ninsoare",
-  73:"Ninsoare",75:"Ninsoare puternică",80:"Averse",81:"Averse",
-  82:"Averse puternice",95:"Furtună",96:"Furtună",99:"Furtună"
-}[code] || "Variabil");
+const translations = {
+  ro:{searching:"Caut informații...",notfound:"Nu am găsit locația.",error:"A apărut o problemă. Verifică internetul și încearcă din nou."},
+  en:{searching:"Searching...",notfound:"Location not found.",error:"Something went wrong. Check your internet and try again."},
+  es:{searching:"Buscando...",notfound:"Ubicación no encontrada.",error:"Ocurrió un problema."},
+  it:{searching:"Ricerca...",notfound:"Località non trovata.",error:"Si è verificato un problema."},
+  fr:{searching:"Recherche...",notfound:"Lieu introuvable.",error:"Un problème est survenu."},
+  de:{searching:"Suche...",notfound:"Ort nicht gefunden.",error:"Ein Problem ist aufgetreten."}
+};
+const weatherCodes = {
+  0:"Senin",1:"Mai mult senin",2:"Parțial noros",3:"Înnorat",45:"Ceață",48:"Ceață cu chiciură",
+  51:"Burniță slabă",53:"Burniță",55:"Burniță puternică",61:"Ploaie slabă",63:"Ploaie",
+  65:"Ploaie puternică",71:"Ninsoare slabă",73:"Ninsoare",75:"Ninsoare puternică",
+  80:"Averse slabe",81:"Averse",82:"Averse puternice",95:"Furtună"
+};
 
-function storeList(key, value){
-  const list = JSON.parse(localStorage.getItem(key) || "[]");
-  const next = [value, ...list.filter(x => x.name !== value.name)].slice(0, 10);
-  localStorage.setItem(key, JSON.stringify(next));
-  renderLists();
+const services = [
+ ["🏨","Hoteluri","Caută hoteluri și cazare în orașul ales.","hotels"],
+ ["🍽️","Restaurante","Descoperă restaurante și mâncare locală.","restaurants"],
+ ["💼","Joburi","Caută locuri de muncă în zona aleasă.","jobs"],
+ ["🚆","Transport","Metrou, tren, autobuz și transport public.","public transport"],
+ ["🚨","Urgențe","Spitale, poliție și farmacii din apropiere.","hospital police pharmacy"],
+ ["📸","Fotografii","Vezi mai multe imagini cu orașul căutat.","photos"],
+ ["🎯","Atracții","Obiective turistice și locuri importante.","tourist attractions"],
+ ["✈️","Zboruri","Caută zboruri către destinația aleasă.","flights"],
+ ["🚕","Taxi","Găsește servicii de taxi și transport local.","taxi"],
+ ["💊","Farmacii","Găsește farmacii din apropiere.","pharmacy"],
+ ["🏛️","Muzee","Descoperă muzee și locuri culturale.","museums"],
+ ["🛍️","Shopping","Centre comerciale și magazine.","shopping"]
+];
+
+function setStatus(text, error=false){
+  $("#status").textContent=text; $("#status").className="status"+(error?" error":"");
 }
-function renderLists(){
-  for(const [key, el] of [["favorites", $("favorites")], ["history", $("history")]]){
-    const list = JSON.parse(localStorage.getItem(key) || "[]");
-    el.innerHTML = list.length ? list.map(x =>
-      `<button class="chip" data-name="${encodeURIComponent(x.name)}">${x.name}</button>`
-    ).join("") : `<span style="color:var(--muted)">Nimic salvat încă.</span>`;
-  }
-  document.querySelectorAll(".chip").forEach(b => b.onclick = () => {
-    $("city").value = decodeURIComponent(b.dataset.name);
-    searchCity();
-  });
-}
+function enc(x){ return encodeURIComponent(x); }
+function wikiLang(){ return ["ro","en","es","it","fr","de"].includes($("#lang").value)?$("#lang").value:"en"; }
 
-async function getDescription(name, lang){
+async function geocode(query){
+  const url=`https://geocoding-api.open-meteo.com/v1/search?name=${enc(query)}&count=1&language=${wikiLang()}&format=json`;
+  const r=await fetch(url); if(!r.ok) throw new Error("geocode");
+  const j=await r.json(); return j.results?.[0]||null;
+}
+async function weather(lat,lon){
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto&forecast_days=7`;
+  const r=await fetch(url); if(!r.ok) throw new Error("weather"); return r.json();
+}
+async function wiki(name){
+  const lang=wikiLang();
+  const url=`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${enc(name)}`;
+  const r=await fetch(url); if(!r.ok) return null; return r.json();
+}
+async function wikiImage(name, country=""){
+  const lang=wikiLang();
+  const searchText=[name,country,"city"].filter(Boolean).join(" ");
+  const url=`https://${lang}.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${enc(searchText)}&gsrlimit=5&prop=pageimages&piprop=thumbnail&pithumbsize=1200&format=json&origin=*`;
   try{
-    const title = encodeURIComponent(name.split(",")[0]);
-    const r = await fetch(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${title}`);
-    if(!r.ok) throw new Error();
-    const d = await r.json();
-    return {text:d.extract || "Nu există descriere disponibilă.", url:d.content_urls?.desktop?.page};
-  }catch{
-    return {text:"Informațiile principale sunt disponibile prin hartă, vreme și serviciile de mai jos.", url:`https://${lang}.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(name)}`};
-  }
+    const r=await fetch(url); if(!r.ok) return null;
+    const j=await r.json();
+    const pages=Object.values(j.query?.pages||{});
+    return pages.find(p=>p.thumbnail?.source)?.thumbnail?.source||null;
+  }catch(e){ return null; }
 }
-
-async function loadPlace(place){
-  const lat = place.latitude, lon = place.longitude;
-  const lang = $("lang").value;
-  currentPlace = {name:place.name, lat, lon, country:place.country || ""};
-
-  $("placeTitle").textContent = [place.name, place.admin1, place.country].filter(Boolean).join(", ");
-  $("coords").textContent = `Lat: ${Number(lat).toFixed(4)} | Lon: ${Number(lon).toFixed(4)}`;
-  $("mapsLink").href = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
-
-  const [wiki, weather] = await Promise.all([
-    getDescription(place.name, lang),
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`).then(r=>r.json())
-  ]);
-
-  $("description").textContent = wiki.text;
-  $("wikiLink").href = wiki.url;
-  const c = weather.current || {};
-  $("temp").textContent = `${Math.round(c.temperature_2m ?? 0)}°C`;
-  $("humidity").textContent = `${c.relative_humidity_2m ?? "--"}%`;
-  $("wind").textContent = `${Math.round(c.wind_speed_10m ?? 0)} km/h`;
-  $("condition").textContent = weatherText(c.weather_code);
-
-  const daily = weather.daily || {};
-  $("forecast").innerHTML = (daily.time || []).slice(0,7).map((date,i) => {
-    const day = new Date(date+"T12:00:00").toLocaleDateString(lang,{weekday:"short"});
-    return `<div class="day"><strong>${day}</strong><div>${weatherText(daily.weather_code[i])}</div><div>${Math.round(daily.temperature_2m_max[i])}° / ${Math.round(daily.temperature_2m_min[i])}°</div></div>`;
-  }).join("");
-
-  const delta = 0.08;
-  $("map").src = `https://www.openstreetmap.org/export/embed.html?bbox=${lon-delta}%2C${lat-delta}%2C${lon+delta}%2C${lat+delta}&layer=mapnik&marker=${lat}%2C${lon}`;
-
-  $("result").style.display = "grid";
-  $("forecastSection").classList.remove("hidden");
-  $("mapSection").classList.remove("hidden");
-  $("status").textContent = "Informațiile au fost încărcate.";
-  storeList("history", currentPlace);
+function saveHistory(name){
+  const arr=JSON.parse(localStorage.getItem("we_history")||"[]").filter(x=>x!==name);
+  arr.unshift(name); localStorage.setItem("we_history",JSON.stringify(arr.slice(0,6))); renderHistory();
 }
-
-async function searchCity(){
-  const q = $("city").value.trim();
-  if(!q) return $("status").textContent = "Scrie un oraș.";
-  $("status").textContent = "Se caută...";
-  $("searchBtn").disabled = true;
+function renderHistory(){
+  const arr=JSON.parse(localStorage.getItem("we_history")||"[]");
+  $("#history").innerHTML=arr.map(x=>`<button class="chip" data-city="${x.replaceAll('"','&quot;')}">🕘 ${x}</button>`).join("");
+  document.querySelectorAll("[data-city]").forEach(b=>b.onclick=()=>{$("#query").value=b.dataset.city;search();});
+}
+function favoriteNames(){ return JSON.parse(localStorage.getItem("we_favs")||"[]"); }
+function updateFav(){
+  const favs=favoriteNames(); const name=state.city?.display;
+  $("#favBtn").textContent=favs.includes(name)?"♥ Favorit salvat":"♡ Salvează favorit";
+}
+function toggleFav(){
+  if(!state.city)return; let favs=favoriteNames(); const n=state.city.display;
+  favs=favs.includes(n)?favs.filter(x=>x!==n):[n,...favs].slice(0,20);
+  localStorage.setItem("we_favs",JSON.stringify(favs)); updateFav();
+}
+function renderServices(city){
+  $("#services").innerHTML=services.map(([i,t,p,q])=>`
+    <article class="card service"><h3>${i} ${t}</h3><p>${p}</p>
+    <a class="btn secondary" target="_blank" rel="noopener" href="https://www.google.com/search?q=${enc(q+" "+city)}">Vezi ${t.toLowerCase()}</a></article>`).join("");
+}
+function renderForecast(data){
+  const fmt=new Intl.DateTimeFormat(wikiLang(),{weekday:"short",day:"2-digit",month:"2-digit"});
+  $("#forecast").innerHTML=data.daily.time.map((d,i)=>`
+    <div class="day"><strong>${fmt.format(new Date(d+"T12:00:00"))}</strong>
+    <div style="font-size:24px;margin:7px 0">${data.daily.weather_code[i]===0?"☀️":data.daily.weather_code[i]<50?"⛅":"🌧️"}</div>
+    <span>${Math.round(data.daily.temperature_2m_min[i])}° / ${Math.round(data.daily.temperature_2m_max[i])}°</span></div>`).join("");
+}
+async function search(){
+  const q=$("#query").value.trim(); if(!q)return;
+  const t=translations[wikiLang()]||translations.ro; setStatus(t.searching);
+  $("#searchBtn").disabled=true;
   try{
-    const lang = $("lang").value;
-    const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=1&language=${lang}&format=json`);
-    const d = await r.json();
-    if(!d.results?.length) throw new Error("Orașul nu a fost găsit.");
-    await loadPlace(d.results[0]);
-  }catch(e){
-    $("status").textContent = e.message || "Nu s-au putut încărca datele. Verifică internetul.";
-  }finally{
-    $("searchBtn").disabled = false;
-  }
+    const loc=await geocode(q); if(!loc){setStatus(t.notfound,true);return;}
+    const display=[loc.name,loc.admin1,loc.country].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join(", ");
+    const [w,info,fallbackPhoto]=await Promise.all([
+      weather(loc.latitude,loc.longitude),
+      wiki(loc.name),
+      wikiImage(loc.name,loc.country)
+    ]);
+    state.city={...loc,display,info,w};
+    $("#cityTitle").textContent=display;
+    $("#coords").textContent=`Lat: ${loc.latitude.toFixed(4)} | Lon: ${loc.longitude.toFixed(4)}`;
+    $("#description").textContent=info?.extract||`${display} este locația selectată. Folosește serviciile de mai jos pentru vreme, hartă, călătorii și informații locale.`;
+    const photoUrl=info?.originalimage?.source||info?.thumbnail?.source||fallbackPhoto||"icon-512.png";
+    $("#cityPhoto").src=photoUrl;
+    $("#cityPhoto").onerror=()=>{$("#cityPhoto").src="icon-512.png";};
+    $("#temp").textContent=Math.round(w.current.temperature_2m)+"°C";
+    $("#humidity").textContent=Math.round(w.current.relative_humidity_2m)+"%";
+    $("#wind").textContent=Math.round(w.current.wind_speed_10m)+" km/h";
+    $("#condition").textContent=weatherCodes[w.current.weather_code]||"Variabil";
+    renderForecast(w);
+    const delta=.08;
+    $("#mapFrame").src=`https://www.openstreetmap.org/export/embed.html?bbox=${loc.longitude-delta}%2C${loc.latitude-delta}%2C${loc.longitude+delta}%2C${loc.latitude+delta}&layer=mapnik&marker=${loc.latitude}%2C${loc.longitude}`;
+    $("#mapsBtn").href=`https://www.google.com/maps/search/?api=1&query=${loc.latitude},${loc.longitude}`;
+    $("#infoBtn").href=info?.content_urls?.desktop?.page||`https://www.google.com/search?q=${enc(display)}`;
+    renderServices(display); renderForecast(w); updateFav(); saveHistory(display);
+    $("#results").classList.remove("hidden"); $("#guideBox").classList.add("hidden");
+    setStatus("Rezultatele sunt gata.");
+  }catch(e){ console.error(e); setStatus(t.error,true); }
+  finally{$("#searchBtn").disabled=false;}
 }
+function makeGuide(){
+  if(!state.city)return;
+  const c=state.city, w=c.w;
+  const sunrise=w.daily.sunrise?.[0]?.split("T")[1]||"—", sunset=w.daily.sunset?.[0]?.split("T")[1]||"—";
+  const guide=`GHID RAPID — ${c.display}
 
-$("searchBtn").onclick = searchCity;
-$("city").addEventListener("keydown", e => { if(e.key === "Enter") searchCity(); });
+☀️ Azi: ${Math.round(w.current.temperature_2m)}°C, ${weatherCodes[w.current.weather_code]||"vreme variabilă"}.
+🌅 Răsărit: ${sunrise} | Apus: ${sunset}
+📍 Coordonate: ${c.latitude.toFixed(4)}, ${c.longitude.toFixed(4)}
 
-$("favBtn").onclick = () => {
-  if(!currentPlace) return;
-  storeList("favorites", currentPlace);
-  $("favBtn").textContent = "♥ Salvat";
-};
+Plan recomandat:
+1. Dimineața: centru, piața principală și o cafenea locală.
+2. La prânz: caută un restaurant tradițional bine evaluat.
+3. După-amiaza: muzeu, parc sau atracția principală.
+4. Seara: promenadă și zonă cu restaurante.
 
-$("shareBtn").onclick = async () => {
-  if(!currentPlace) return;
-  const data = {title:"World Explorer AI", text:`Vezi ${currentPlace.name} în World Explorer AI`, url:location.href};
-  try{ if(navigator.share) await navigator.share(data); else await navigator.clipboard.writeText(location.href); }
-  catch{}
-};
-
-document.querySelectorAll("[data-service]").forEach(btn => btn.onclick = () => {
-  const city = currentPlace?.name || $("city").value || "London";
-  const terms = {
-    hotels:"hotels in", restaurants:"restaurants in", jobs:"jobs in", transport:"public transport in",
-    hospital:"hospitals in", pharmacy:"pharmacies in", police:"police stations in"
-  };
-  window.open(`https://www.google.com/search?q=${encodeURIComponent(terms[btn.dataset.service]+" "+city)}`,"_blank","noopener");
-});
-
-$("aiBtn").onclick = () => {
-  const city = currentPlace?.name || $("city").value || "Londra";
-  const prompt = `Spune-mi ce merită vizitat în ${city}, unde pot mânca, cum este transportul și ce trebuie să știu înainte de călătorie.`;
-  window.open(`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`,"_blank","noopener");
-};
-
-$("locateBtn").onclick = () => {
-  if(!navigator.geolocation) return $("status").textContent = "Localizarea nu este disponibilă.";
-  $("status").textContent = "Se caută locația ta...";
-  navigator.geolocation.getCurrentPosition(async p => {
-    const lat=p.coords.latitude, lon=p.coords.longitude;
-    try{
-      const r=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(lat+","+lon)}&count=1`);
-      // fallback direct place
-      await loadPlace({name:"Locația mea",latitude:lat,longitude:lon,country:""});
-    }catch{
-      await loadPlace({name:"Locația mea",latitude:lat,longitude:lon,country:""});
-    }
-  }, () => $("status").textContent = "Nu ai permis accesul la locație.");
-};
-
-$("themeBtn").onclick = () => {
-  const dark = document.documentElement.dataset.theme === "dark";
-  document.documentElement.dataset.theme = dark ? "" : "dark";
-  localStorage.setItem("theme", dark ? "light" : "dark");
-  $("themeBtn").textContent = dark ? "🌙 Mod întunecat" : "☀️ Mod luminos";
-};
-if(localStorage.getItem("theme")==="dark"){
-  document.documentElement.dataset.theme="dark";
-  $("themeBtn").textContent="☀️ Mod luminos";
+Folosește butoanele Hoteluri, Restaurante, Transport, Atracții și Urgențe pentru căutări actualizate.`;
+  $("#guideBox").textContent=guide; $("#guideBox").classList.remove("hidden");
 }
-
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault(); deferredPrompt=e; $("installBtn").classList.remove("hidden");
-});
-$("installBtn").onclick = async () => {
-  if(!deferredPrompt) return;
-  deferredPrompt.prompt(); await deferredPrompt.userChoice;
-  deferredPrompt=null; $("installBtn").classList.add("hidden");
+async function share(){
+  if(!state.city)return;
+  const data={title:"World Explorer AI",text:`Descoperă ${state.city.display}`,url:location.href};
+  if(navigator.share){try{await navigator.share(data)}catch{}}
+  else{await navigator.clipboard.writeText(location.href);setStatus("Link copiat.");}
+}
+$("#searchBtn").onclick=search;
+$("#query").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
+$("#favBtn").onclick=toggleFav;
+$("#guideBtn").onclick=makeGuide;
+$("#shareBtn").onclick=share;
+$("#themeBtn").onclick=()=>{
+  const dark=document.documentElement.dataset.theme==="dark";
+  document.documentElement.dataset.theme=dark?"light":"dark";
+  localStorage.setItem("we_theme",dark?"light":"dark");
+  $("#themeBtn").textContent=dark?"🌙":"☀️";
 };
-
-if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
-renderLists();
-searchCity();
+const savedTheme=localStorage.getItem("we_theme")||"light";
+document.documentElement.dataset.theme=savedTheme;
+$("#themeBtn").textContent=savedTheme==="dark"?"☀️":"🌙";
+window.addEventListener("beforeinstallprompt",e=>{
+  e.preventDefault();state.deferredPrompt=e;$("#installBtn").classList.remove("hidden");
+});
+$("#installBtn").onclick=async()=>{
+  if(!state.deferredPrompt)return;state.deferredPrompt.prompt();
+  await state.deferredPrompt.userChoice;state.deferredPrompt=null;$("#installBtn").classList.add("hidden");
+};
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
+renderHistory();
+search();
 </script>
-<footer style="text-align:center;padding:20px;font-size:14px;">
-  <a href="privacy.html" target="_blank">
-    Privacy Policy
-  </a>
-</footer>
 </body>
 </html>
-
-
